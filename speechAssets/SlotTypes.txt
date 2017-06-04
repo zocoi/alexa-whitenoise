@@ -1,0 +1,10 @@
+cafe
+day
+fire
+night
+rain
+river
+space
+thunder
+water
+wind

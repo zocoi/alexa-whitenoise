@@ -1,7 +1,10 @@
 {
-  "intents": [
-    {
-      "intent": "PlayAudio"
+  "intents": [{
+      "intent": "PlayAudio",
+      "slots": [{
+        "name": "Sound",
+        "type": "LIST_OF_SOUNDS"
+      }]
     },
     {
       "intent": "AMAZON.PauseIntent"
