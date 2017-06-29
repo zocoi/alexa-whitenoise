@@ -21,7 +21,8 @@ var stateHandlers = {
       this.handler.state = constants.states.START_MODE;
 
       var message = 'Welcome to the White Noise. You can say, play Cafe to begin.';
-      var reprompt = 'You can say, play Cafe, to begin.';
+      var reprompt = 'You can say, play Cafe, to begin. We have the following sounds: '
+        + audioData.map(function(data){data.title}).join(", ") + ".";
 
       this.response.speak(message).listen(reprompt);
       this.emit(':responseReady');
@@ -82,7 +83,7 @@ var stateHandlers = {
       var reprompt;
       if (this.attributes['playbackFinished']) {
         this.handler.state = constants.states.START_MODE;
-        message = 'Welcome to White Noise. You can say, play the audio to begin the podcast.';
+        message = 'Welcome to White Noise. You can say, play the audio to begin.';
         reprompt = 'You can say, play the audio, to begin.';
       } else {
         this.handler.state = constants.states.RESUME_DECISION_MODE;
@@ -226,16 +227,20 @@ var controller = function() {
         this.attributes['playbackFinished'] = false;
       }
 
-      var token = String(this.attributes['playOrder'][this.attributes['index']]);
+      var token;
       var playBehavior = 'REPLACE_ALL';
-      var podcast;
-      var soundName = this.event.request.intent.slots.Answer.value
-      if (soundName) {
-        podcast = audioData.find(function(data){
-          data.name.toLowerCase() === soundName.toLowerCase()
+      var podcast = null;
+      var slots = this.event.request.intent.slots;
+      if (slots && slots.Sound && slots.Sound.value) {
+        var soundName = slots.Sound.value
+        podcast = audioData.find(function(data, idx){
+          token = idx
+          return data.title.toLowerCase() === soundName.toLowerCase()
         });
-      } else {
+      }
+      if (!podcast) {
         podcast = audioData[this.attributes['playOrder'][this.attributes['index']]];
+        token = String(this.attributes['playOrder'][this.attributes['index']]);
       }
       var offsetInMilliseconds = this.attributes['offsetInMilliseconds'];
       // Since play behavior is REPLACE_ALL, enqueuedToken attribute need to be set to null.
