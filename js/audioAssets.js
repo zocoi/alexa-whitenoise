@@ -2,6 +2,12 @@
 
 var audioData = [
   {
+    'title': 'Whitenoise',
+    'url': 'https://raw.githubusercontent.com/zocoi/alexa-whitenoise/master/res/audio/whitenoise.m4a'
+  }, {
+    'title': 'Hairdryer',
+    'url': 'https://raw.githubusercontent.com/zocoi/alexa-whitenoise/master/res/audio/hairdryer.m4a'
+  }, {
     'title': 'Cafe',
     'url': 'https://raw.githubusercontent.com/zocoi/alexa-whitenoise/master/res/audio/cafe.m4a'
   }, {
